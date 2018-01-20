@@ -1,24 +1,52 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { showCategory } from '../actions';
+import axios from 'axios';
 
 class App extends Component {
+	constructor(){
+		super();
+		this.state = {
+			content: {
+				category: "",
+				icon_url: "",
+				id: "",
+				url: "",
 
+			},
+			auth: false,
+			text: "Choose a category"
+		}
+	}
 	componentWillMount() {
 		this.props.showCategory()
 	}
 
-	categoryContent() {
-		console.log('teste')
+	categoryContent(cat) {
+		this.setState({
+			auth: false,
+			text: "Loading..."
+		});
+		const url = 'https://api.chucknorris.io/jokes/random?category=' + cat;
+		axios.get(url)
+			.then((response) => {
+				this.setState({
+					content: response.data,
+					auth: true
+				});
+			});
+		
 	}
+
+		
 
 	renderCategoryList() {
 		return this.props.category.map((category) => {
 			return (
 				<li>
-					<a href="#" onClick={this.categoryContent}>{category}</a>
+					<button onClick={() => this.categoryContent(category)}>{category}</button>
 				</li>
-				)
+			)
 		})
 	}
 
@@ -29,10 +57,31 @@ class App extends Component {
 	      	<ul>
 	      		{ this.renderCategoryList() }
 	      	</ul>
+	      	{this.state.auth ? (
+		      	<p>
+			      	Category : {this.state.content.category} 
+		      	</p>
+	      	) : (<p>{this.state.text}</p>)}
+	      	{this.state.auth ? (
+		      	<p>
+			      	icon_url : {this.state.content.icon_url} 
+		      	</p>
+	      	) : (<p></p>)}
+	      	{this.state.auth ? (
+		      	<p>
+			      	id : {this.state.content.id} 
+		      	</p>
+	      	) : (<p></p>)}
+	      	{this.state.auth ? (
+		      	<p>
+			      	url : {this.state.content.url} 
+		      	</p>
+	      	) : (<p></p>)}
 	      </div>
 	    );
-	  }
+	    
 	}
+}
 
 function mapStateToProps(state) {
 	return {
