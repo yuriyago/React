@@ -12,6 +12,7 @@ class App extends Component {
 				icon_url: "",
 				id: "",
 				url: "",
+				value: "",
 
 			},
 			auth: false,
@@ -58,25 +59,25 @@ class App extends Component {
 	      		{ this.renderCategoryList() }
 	      	</ul>
 	      	{this.state.auth ? (
-		      	<p>
-			      	Category : {this.state.content.category} 
-		      	</p>
+		      	<div>
+			      	<p>
+				      	Category : {this.state.content.category} 
+			      	</p>
+			      	<p>
+			      		icon_url : {this.state.content.icon_url} 
+			      		<a href={this.state.content.url} target="_blank"><img src={this.state.content.icon_url} /></a>
+		      		</p>
+		      		<p>
+				      	id : {this.state.content.id} 
+			      	</p>
+			      	<p>
+				      	url : {this.state.content.url} 
+			      	</p>
+			      	<p>
+			      		value : {this.state.content.value}
+			      	</p>
+		      	</div>
 	      	) : (<p>{this.state.text}</p>)}
-	      	{this.state.auth ? (
-		      	<p>
-			      	icon_url : {this.state.content.icon_url} 
-		      	</p>
-	      	) : (<p></p>)}
-	      	{this.state.auth ? (
-		      	<p>
-			      	id : {this.state.content.id} 
-		      	</p>
-	      	) : (<p></p>)}
-	      	{this.state.auth ? (
-		      	<p>
-			      	url : {this.state.content.url} 
-		      	</p>
-	      	) : (<p></p>)}
 	      </div>
 	    );
 	    
